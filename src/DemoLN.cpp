@@ -113,7 +113,7 @@ int main()
 		glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	GLuint prog = getShader("Shaders/test.frag");
+	GLuint prog = getShader("res/shaders/test.frag");
 	glUseProgram(prog);
 
 	while (!CORE::Window::isShouldClose())
