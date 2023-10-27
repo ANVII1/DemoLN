@@ -8,9 +8,7 @@ endif()
 set(PROJECT_NAME DemoLN)
 project(${PROJECT_NAME})
 
-#add_subdirectory(src)
-
-add_executable(${PROJECT_NAME} "src/DemoLN.cpp" )
+add_executable(${PROJECT_NAME} "src/DemoLN.cpp"  "src/Window/window.hpp" "src/Window/window.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
@@ -31,3 +29,7 @@ target_link_libraries(${PROJECT_NAME} glad)
 
 add_subdirectory(external/glm)
 target_link_libraries(${PROJECT_NAME} glm)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
