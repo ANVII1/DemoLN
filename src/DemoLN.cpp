@@ -235,19 +235,26 @@ int main()
 
 	while (!CORE::Window::isShouldClose())
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		GLfloat radius = 10.0f;
 		GLfloat camX = sin(glfwGetTime()) * radius;
 		GLfloat camZ = cos(glfwGetTime()) * radius;
 		camera.move(glm::vec3(camX, 0.0, camZ));
 
 		// Create camera transformation
+		glm::mat4 model;
 		glm::mat4 view;
-		view = camera.GetViewMatrix();
-		glm::mat4 projection; // 500 - screen resolution
-		projection = glm::perspective(camera.Zoom, (float)500 / (float)500, 0.1f, 1000.0f);
+		glm::mat4 projection;
+
+		model = glm::rotate(glm::mat4(1.0f),(float)glfwGetTime(),glm::vec3(5.0f,0.0f,1.0f));
+		view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));// camera.GetViewMatrix();
+		projection = glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 1000.0f);
 
 		ourShader.setMat4(view, "view");
 		ourShader.setMat4(projection, "projection");
+		ourShader.setMat4(model, "model"); ////////////-----------------------
 
 		CORE::Window::pollEvents();
 		glPushMatrix();
