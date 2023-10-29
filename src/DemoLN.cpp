@@ -177,6 +177,11 @@ public:
 		GLint Location = glGetUniformLocation(program, varName);
 		glUniformMatrix4fv(Location, 1, GL_FALSE, glm::value_ptr(value));
 	}
+	void setFloat1(float value, const char* varName)
+	{
+		GLint Location = glGetUniformLocation(program, varName);
+		glUniform1f(Location, value);
+	}
 	void use()
 	{
 		glUseProgram(program);
@@ -254,7 +259,8 @@ int main()
 
 		ourShader.setMat4(view, "view");
 		ourShader.setMat4(projection, "projection");
-		ourShader.setMat4(model, "model"); ////////////-----------------------
+		ourShader.setMat4(model, "model");
+		ourShader.setFloat1((float)glfwGetTime(), "u_time");
 
 		CORE::Window::pollEvents();
 		glPushMatrix();
